@@ -25,6 +25,8 @@ import com.duckduckgo.app.browser.R
 import com.duckduckgo.app.global.DuckDuckGoActivity
 import com.duckduckgo.app.global.ViewModelFactory
 import com.duckduckgo.app.onboarding.ui.OnboardingActivity
+import com.newrelic.agent.android.NewRelic;
+
 import javax.inject.Inject
 
 
@@ -41,6 +43,9 @@ class LaunchActivity : DuckDuckGoActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launch)
         configureObservers()
+        NewRelic.withApplicationToken(
+                "AA290fa0a368d9654617565c06df90f0276602f9ee"
+        ).start(this.getApplication());
     }
 
     private fun configureObservers() {
