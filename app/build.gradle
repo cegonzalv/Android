@@ -6,6 +6,12 @@ apply plugin: 'kotlin-kapt'
 apply from: '../versioning.gradle'
 apply plugin: 'newrelic'
 
+apply plugin: 'jacoco'
+
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
 ext {
     VERSION_NAME = "5.3.1"
     USE_ORCHESTRATOR = project.hasProperty('orchestrator') ? project.property('orchestrator') : false
@@ -36,7 +42,11 @@ android {
     }
     buildTypes {
         debug {
+            testCoverageEnabled true
+
         }
+
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -54,7 +64,6 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
-
         if (USE_ORCHESTRATOR) {
             execution 'ANDROID_TEST_ORCHESTRATOR'
         }
